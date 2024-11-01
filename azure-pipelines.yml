@@ -19,6 +19,12 @@ steps:
     packageType: 'sdk'
     version: '8.x'
 
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'Sonarqube Server'
+    scannerMode: 'dotnet'
+    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
@@ -48,6 +54,14 @@ steps:
     projects: '**/*[Tt]ests/*.csproj'
     arguments: '--collect "Code coverage"'
 
+- task: SonarQubeAnalyze@7
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'
+    
 - task: DotNetCoreCLI@2
   displayName: Packing
   inputs:
