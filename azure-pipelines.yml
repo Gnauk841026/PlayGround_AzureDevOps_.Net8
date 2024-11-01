@@ -47,3 +47,16 @@ steps:
     command: 'test'
     projects: '**/*[Tt]ests/*.csproj'
     arguments: '--collect "Code coverage"'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'byBuildNumber'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
+    command: 'publish'
+    publishWebProjects: true
