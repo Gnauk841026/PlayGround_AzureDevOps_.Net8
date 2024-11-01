@@ -9,6 +9,8 @@ pr:
     include:
       - main
 
+
+
 pool:
   vmImage: ubuntu-latest
 
@@ -19,11 +21,11 @@ steps:
     packageType: 'sdk'
     version: '8.x'
 
-- task: SonarQubePrepare@7
-  inputs:
-    SonarQube: 'Sonarqube Server'
-    scannerMode: 'dotnet'
-    projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
+# - task: SonarQubePrepare@7
+#   inputs:
+#     SonarQube: 'Sonarqube Server'
+#     scannerMode: 'dotnet'
+#     projectKey: 'PlayGround-AzureDevOps_PlayGround_AzureDevOps_.Net.git_bcfce20d-c6ca-4086-a9b0-dbd39042d864'
 
 - task: DotNetCoreCLI@2
   displayName: Restore
@@ -54,34 +56,10 @@ steps:
     projects: '**/*[Tt]ests/*.csproj'
     arguments: '--collect "Code coverage"'
 
-- task: SonarQubeAnalyze@7
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
+# - task: SonarQubeAnalyze@7
+#   inputs:
+#     jdkversion: 'JAVA_HOME_17_X64'
 
-- task: SonarQubePublish@7
-  inputs:
-    pollingTimeoutSec: '300'
-    
-- task: DotNetCoreCLI@2
-  displayName: Packing
-  inputs:
-    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'off'
-
-- task: DotNetCoreCLI@2
-  displayName: Publish
-  inputs:
-    azureSubscription: 'Visual Studio Enterprise 訂閱 – MPN(0cbc3466-ab56-4e0d-b53c-4566e585974c)'
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--output $(build.artifactstagingdirectory)'
-
-- task: S3Upload@1
-  inputs:
-    awsCredentials: 'AWS S3'
-    regionName: 'ap-northeast-1'
-    bucketName: 'demo-bucket-20240930'
-    sourceFolder: '$(Build.ArtifactStagingDirectory)'
-    globExpressions: '**/*.zip'
+# - task: SonarQubePublish@7
+#   inputs:
+#     pollingTimeoutSec: '300'
