@@ -63,3 +63,11 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--output $(build.artifactstagingdirectory)'
+
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'AWS S3'
+    regionName: 'ap-northeast-1'
+    bucketName: 'demo-bucket-20240930'
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    globExpressions: '**/*.zip'
